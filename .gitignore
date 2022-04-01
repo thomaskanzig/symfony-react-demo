@@ -15,3 +15,12 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> other files ###
+/.idea/
+/.DS_Store
+/public/uploads/
+/public/cache/
+.vscode
+.module-cache
+###< other files ###
