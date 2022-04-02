@@ -1,13 +1,12 @@
 import React from 'react';
+import LoginPage from "./pages/LoginPage";
 
 class App extends React.Component {
-      render() {
-            return (
-                <div>
-                    Hello world with React and Symfony!
-                </div>
-            );
-      }
+    render() {
+        return (
+            <LoginPage/>
+        );
+    }
 }
 
 export default App;
