@@ -1,7 +1,25 @@
-import React from 'react';
+import React, {Props} from 'react';
+import {NavigateFunction} from "react-router-dom";
+import {withHooksNavigate} from "../hooks/useHookNavigate";
 
-class LoginPage extends React.Component {
-    render() {
+interface LoginPageProps {
+    useWithNavigate: NavigateFunction
+}
+
+class LoginPage extends React.Component<LoginPageProps> {
+    constructor(props: LoginPageProps) {
+        super(props)
+
+        this.onSubmitHandler = this.onSubmitHandler.bind(this)
+    }
+
+    private onSubmitHandler(event: React.FormEvent): void {
+        event.preventDefault();
+
+        this.props.useWithNavigate("/products", {replace: true})
+    }
+
+    public render(): React.ReactElement {
         return (
             <section className="vh-100">
                 <div className="container py-5 h-100">
@@ -18,7 +36,7 @@ class LoginPage extends React.Component {
                                     <div className="col-md-6 d-flex align-items-center">
                                         <div className="card-body p-4 p-lg-5 text-black">
 
-                                            <form>
+                                            <form onSubmit={this.onSubmitHandler}>
                                                 <div className="d-flex align-items-center mb-3 pb-1">
                                                     <span className="h1 fw-bold mb-0">Logo</span>
                                                 </div>
@@ -36,13 +54,13 @@ class LoginPage extends React.Component {
 
                                                 <div className="pt-1 mb-4">
                                                     <button className="btn btn-dark btn-lg btn-block"
-                                                            type="button">Login
+                                                            type="submit">Login
                                                     </button>
                                                 </div>
 
                                                 <a className="small text-muted" href="#!">Forgot password?</a>
-                                                <p className="mb-5 pb-lg-2" style={{color: '#393f81;'}}>Don't have an
-                                                    account? <a href="#!" style={{color: '#393f81;'}}>Register here</a></p>
+                                                <p className="mb-5 pb-lg-2">Don't have an
+                                                    account? <a href="#!">Register here</a></p>
                                                 <a href="#!" className="small text-muted">Terms of use.</a>
                                                 <a href="#!" className="small text-muted">Privacy policy</a>
                                             </form>
@@ -58,4 +76,4 @@ class LoginPage extends React.Component {
     }
 }
 
-export default LoginPage;
+export default withHooksNavigate(LoginPage);
