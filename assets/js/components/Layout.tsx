@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {ReactElement, ReactHTML} from 'react';
 import Header from "./Header";
 import Footer from "./Footer";
 
-const Layout = (props: any) => {
+interface LayoutProps {
+    children: ReactElement;
+}
+
+const Layout = (props: LayoutProps) => {
     return (
         <React.Fragment>
             <Header/>
