@@ -45,7 +45,6 @@ This document contains all API definitions and their routes.
                 "price": "79.90",
                 "image": "https://m.media-amazon.com/images/I/61-Fy3meKHL._AC_SX679_.jpg"
               },
-              ...
             ]
       ```
 
