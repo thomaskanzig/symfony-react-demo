@@ -7,7 +7,7 @@ This document contains all API definitions and their routes.
 
 * **URL**
 
-  /{_locale}/api/products
+  `/api/products`
 
 * **Method:**
 
