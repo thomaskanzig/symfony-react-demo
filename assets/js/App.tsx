@@ -9,7 +9,7 @@ const App = () => {
         <React.Fragment>
             <Routes>
                 <Route path='/' element={<LoginPage/>} />
-                <Route path='/products' element={<ProductListPage />} />
+                <Route path='/products' element={<ProductListPage />} />y
                 <Route path='/products/:productId' element={<ProductDetailPage />} />
             </Routes>
         </React.Fragment>

@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from "../components/Layout";
 import {Link} from "react-router-dom";
+import {Product} from "../models/Product";
 
 const ProductListPage = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        getProductsApi();
+    }, []);
+
+    const getProductsApi = async () => {
+        const response = await fetch(
+            "/api/products",
+            {
+                headers: {
+                    'Authorization': __APP__.AUTH_API_TOKEN
+                },
+            }
+        );
+        const data = await response.json();
+        setProducts(data);
+    };
+
     return (
         <Layout>
             <div className="container">
@@ -18,33 +38,21 @@ const ProductListPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>
-                                <img src="https://picsum.photos/60/60" className="rounded d-block product-list__image" alt="Image"/>
-                            </th>
-                            <td>0001</td>
-                            <td>Name of Product</td>
-                            <td>89.00 EUR</td>
-                            <th>
-                                <Link to="/products/0001" className="btn btn-primary">
-                                    <i className="bi bi-eye-fill"/> Detail
-                                </Link>
-                            </th>
-                        </tr>
-
-                        <tr>
-                            <th>
-                                <img src="https://picsum.photos/60/60" className="rounded d-block" alt="Image"/>
-                            </th>
-                            <td>0002</td>
-                            <td>Name of Product</td>
-                            <td>67.00 EUR</td>
-                            <th>
-                                <Link to="/products/0001" className="btn btn-primary">
-                                    <i className="bi bi-eye-fill"/> Detail
-                                </Link>
-                            </th>
-                        </tr>
+                        {products.map((product: Product) =>
+                            <tr key={product.id}>
+                                <th className="product-list__image">
+                                    <img src={product.image} className="rounded d-block" alt="Image"/>
+                                </th>
+                                <td>{product.articleNumber}</td>
+                                <td className="product-list__name">{product.name}</td>
+                                <td>{product.price}</td>
+                                <th className="text-end">
+                                    <Link to={`/products/${product.articleNumber}`} className="btn btn-primary">
+                                        <i className="bi bi-eye-fill"/> Detail
+                                    </Link>
+                                </th>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

@@ -1,4 +1,9 @@
-.product-list__image {
-    width: 60px;
-    height: 60px;
+.product-list {
+    &__image > img{
+        width: 60px;
+    }
+
+    &__name {
+        width: 24rem;
+    }
 }

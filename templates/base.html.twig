@@ -10,6 +10,11 @@
         {% endblock %}
 
         {% block javascripts %}
+            <script>
+                const __APP__ = {{ {
+                    AUTH_API_TOKEN: csrf_token('authApiToken')
+                }|json_encode|raw }};
+            </script>
             {{ encore_entry_script_tags('main') }}
         {% endblock %}
     </head>

@@ -1,8 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from "../components/Layout";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {Product} from "../models/Product";
 
 const ProductDetailPage = () => {
+    const params = useParams();
+    const [product, setProduct] = useState<Product>();
+
+    const { productId } = params;
+
+    useEffect(() => {
+        getProductApi();
+    }, []);
+
+    const getProductApi = async () => {
+        const response = await fetch(
+            `/api/product/${productId}`,
+            {
+                headers: {
+                    'Authorization': __APP__.AUTH_API_TOKEN
+                },
+            }
+        );
+        const data = await response.json();
+        setProduct(data);
+    };
+
     return (
         <Layout>
             <div className="container">
@@ -10,17 +33,15 @@ const ProductDetailPage = () => {
                     Go back to overview
                 </Link>
 
-                <h1 className="my-5">Name of Product</h1>
+                <h1 className="my-5">{product?.name}</h1>
                 <div className="row">
                     <div className="col-sm-12 col-md-4 mb-4">
-                        <img src="https://picsum.photos/800/600" className="rounded d-block img-fluid" alt="Image"/>
+                        <img src={product?.image} className="rounded d-block img-fluid" alt="Image"/>
                     </div>
                     <div className="col-sm-12 col-md-8">
-                        <p>
-                            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
-                        </p>
-                        <h3>89,99</h3>
-                        <div className="product-detail__article-number">Article number: 0001</div>
+                        <p>{product?.description}</p>
+                        <h3>{product?.price}</h3>
+                        <div className="product-detail__article-number">Article number: {product?.articleNumber}</div>
                     </div>
                 </div>
             </div>
