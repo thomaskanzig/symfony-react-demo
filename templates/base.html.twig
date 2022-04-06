@@ -12,7 +12,9 @@
         {% block javascripts %}
             <script>
                 const __APP__ = {{ {
-                    AUTH_API_TOKEN: csrf_token('authApiToken')
+                    AUTH_API_TOKEN: csrf_token('authApiToken'),
+                    NAME: appName,
+                    VERSION: appVersion,
                 }|json_encode|raw }};
             </script>
             {{ encore_entry_script_tags('main') }}
