@@ -24,3 +24,6 @@ yarn-error.log
 .vscode
 .module-cache
 ###< other files ###
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

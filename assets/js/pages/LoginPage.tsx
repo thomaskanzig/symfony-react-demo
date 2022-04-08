@@ -1,12 +1,47 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const loginRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [errorLogin, setErrorLogin] = useState<string | null>();
+
+    const getLoginApi = async () => {
+        setErrorLogin(null);
+
+        try {
+            const response = await fetch(
+                `/api/login`,
+                {
+                    method:'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({username: loginRef.current?.value, password: passwordRef.current?.value})
+                }
+            );
+
+            if (401 === response.status) {
+                throw new Error('Wrong access. Try again!');
+            }
+
+            if (200 !== response.status) {
+                throw new Error(response.statusText);
+            }
+
+            // TODO: Get token with "data.token" and save them.
+            // const data = await response.json();
+
+            navigate("/products", {replace: true});
+        } catch (error: any) {
+            setErrorLogin(error.message);
+        }
+    };
+
     const onSubmitHandler = (event: React.FormEvent): void => {
         event.preventDefault();
-
-        navigate("/products", {replace: true});
+        getLoginApi();
     }
 
     return (
@@ -30,15 +65,19 @@ const LoginPage = () => {
                                                 <span className="h1 fw-bold mb-0">Logo</span>
                                             </div>
 
+                                            {(!!errorLogin ? (
+                                                <div className="text-danger">{errorLogin}</div>
+                                            ) : null)}
+
                                             <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing:'1px'}}>Sign
                                                 into your account</h5>
 
                                             <div className="form-outline mb-4">
-                                                <input type="email" className="form-control form-control-lg" placeholder="Username"/>
+                                                <input type="text" className="form-control form-control-lg" placeholder="Username" ref={loginRef}/>
                                             </div>
 
                                             <div className="form-outline mb-4">
-                                                <input type="password" className="form-control form-control-lg" placeholder="Password"/>
+                                                <input type="password" className="form-control form-control-lg" placeholder="Password" ref={passwordRef}/>
                                             </div>
 
                                             <div className="pt-1 mb-4">
@@ -46,12 +85,6 @@ const LoginPage = () => {
                                                         type="submit">Login
                                                 </button>
                                             </div>
-
-                                            <a className="small text-muted" href="#!">Forgot password?</a>
-                                            <p className="mb-5 pb-lg-2">Don't have an
-                                                account? <a href="#!">Register here</a></p>
-                                            <a href="#!" className="small text-muted">Terms of use.</a>
-                                            <a href="#!" className="small text-muted">Privacy policy</a>
                                         </form>
                                     </div>
                                 </div>
