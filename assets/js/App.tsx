@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import LoginPage from "./pages/LoginPage";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import ProductListPage from "./pages/ProductListPage";
 import ProductDetailPage from "./pages/ProducDetailPage";
+import AuthContext from "./store/AuthContext";
 
 const App = () => {
+    const Auth = useContext(AuthContext);
+
     return (
         <React.Fragment>
             <Routes>
+                {Auth.isLoggedIn ? (
+                    <React.Fragment>
+                        <Route path='/products' element={<ProductListPage />} />
+                        <Route path='/products/:productId' element={<ProductDetailPage />} />
+                    </React.Fragment>
+                ) : null}
+
                 <Route path='/' element={<LoginPage/>} />
-                <Route path='/products' element={<ProductListPage />} />y
-                <Route path='/products/:productId' element={<ProductDetailPage />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </React.Fragment>
     );

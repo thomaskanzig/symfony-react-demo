@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Layout from "../components/Layout";
 import {Link} from "react-router-dom";
 import {Product} from "../models/Product";
+import AuthContext from "../store/AuthContext";
 
 const ProductListPage = () => {
     const [products, setProducts] = useState([]);
+    const Auth = useContext(AuthContext);
 
     useEffect(() => {
         getProductsApi();
@@ -15,7 +17,7 @@ const ProductListPage = () => {
             "/api/products",
             {
                 headers: {
-                    'Authorization': __APP__.AUTH_API_TOKEN
+                    'Authorization': `Bearer ${Auth.token}`
                 },
             }
         );
@@ -34,7 +36,7 @@ const ProductListPage = () => {
                             <th>Article number</th>
                             <th>Name</th>
                             <th>Price</th>
-                            <th></th>
+                            <th/>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +49,7 @@ const ProductListPage = () => {
                                 <td className="product-list__name">{product.name}</td>
                                 <td>{product.price}</td>
                                 <th className="text-end">
-                                    <Link to={`/products/${product.articleNumber}`} className="btn btn-primary">
+                                    <Link to={`/products/${product.id}`} className="btn btn-primary">
                                         <i className="bi bi-eye-fill"/> Detail
                                     </Link>
                                 </th>

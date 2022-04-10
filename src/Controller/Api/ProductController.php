@@ -15,14 +15,8 @@ use Symfony\Component\Serializer\Serializer;
 class ProductController extends AbstractController
 {
     #[Route('/api/products', name: 'api_product_list', methods: ['GET'])]
-    public function list(Request $request, ProductRepository $productRepository): Response
+    public function list(ProductRepository $productRepository): Response
     {
-        $tokenApi = $request->headers->get('Authorization');
-
-        if (!$this->isCsrfTokenValid('authApiToken', $tokenApi)) {
-            throw new InvalidCsrfTokenException();
-        }
-
         /** @var Product $products */
         $products = $productRepository->findAll();
 
@@ -38,14 +32,8 @@ class ProductController extends AbstractController
     }
 
     #[Route('/api/product/{productId}', name: 'api_product_detail', methods: ['GET'])]
-    public function detail(string $productId, Request $request, ProductRepository $productRepository): Response
+    public function detail(string $productId, ProductRepository $productRepository): Response
     {
-        $tokenApi = $request->headers->get('Authorization');
-
-        if (!$this->isCsrfTokenValid('authApiToken', $tokenApi)) {
-            throw new InvalidCsrfTokenException();
-        }
-
         /** @var Product $products */
         $products = $productRepository->find($productId);
 

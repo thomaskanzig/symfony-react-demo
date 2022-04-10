@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Layout from "../components/Layout";
 import {Link, useParams} from "react-router-dom";
 import {Product} from "../models/Product";
+import AuthContext from "../store/AuthContext";
 
 const ProductDetailPage = () => {
     const params = useParams();
     const [product, setProduct] = useState<Product>();
-
+    const Auth = useContext(AuthContext);
     const { productId } = params;
 
     useEffect(() => {
@@ -18,7 +19,7 @@ const ProductDetailPage = () => {
             `/api/product/${productId}`,
             {
                 headers: {
-                    'Authorization': __APP__.AUTH_API_TOKEN
+                    'Authorization': `Bearer ${Auth.token}`
                 },
             }
         );
