@@ -1,11 +1,13 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import AuthContext from "../store/AuthContext";
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [errorLogin, setErrorLogin] = useState<string | null>();
+    const Auth = useContext(AuthContext);
 
     const getLoginApi = async () => {
         setErrorLogin(null);
@@ -18,7 +20,10 @@ const LoginPage = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({username: loginRef.current?.value, password: passwordRef.current?.value})
+                    body: JSON.stringify({
+                        username: loginRef.current?.value,
+                        password: passwordRef.current?.value
+                    })
                 }
             );
 
@@ -30,8 +35,8 @@ const LoginPage = () => {
                 throw new Error(response.statusText);
             }
 
-            // TODO: Get token with "data.token" and save them.
-            // const data = await response.json();
+            const data = await response.json();
+            Auth.login(data.token);
 
             navigate("/products", {replace: true});
         } catch (error: any) {
