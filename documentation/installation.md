@@ -18,7 +18,7 @@ git clone git@github.com:thomaskanzig/symfony-react-demo.git .
 
 ### 2 Config environment file
 
-Before start to code, make a copy from [.env.test](../.env.test) and rename to `.env.local` in the same path and adjust all values necessary.
+Make a copy from [.env.test](../.env.test) and rename to `.env.local` in the same path and adjust all values necessary.
 
 See [here](https://symfony.com/blog/new-in-symfony-4-2-define-env-vars-per-environment) to explain more.
 
@@ -58,4 +58,24 @@ yarn install
 yarn encore dev
 ```
 
+### 9 Running server with Symfony
 
+```bash
+# start server and show logs. For stop with control+C. (Terminal tab will be unavaible).
+symfony server:start
+```
+
+```bash
+# start server in background and continue working and running other comands
+symfony server:start -d
+```
+
+```bash
+# show the latest log messages.
+symfony server:log
+```
+
+```bash
+# stop server.
+symfony server:stop
+```
