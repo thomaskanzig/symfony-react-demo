@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/AuthContext";
-import classNames from "classnames";
 import Button from "../UI/Button";
 
 const LoginPage = () => {
