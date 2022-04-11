@@ -1,21 +1,19 @@
-import React, {ReactElement, ReactHTML} from 'react';
+import React, { ReactElement } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
 interface LayoutProps {
-    children: ReactElement;
+	children: ReactElement;
 }
 
 const Layout = (props: LayoutProps) => {
-    return (
-        <React.Fragment>
-            <Header/>
-            <main className="flex-shrink-0">
-                {props.children}
-            </main>
-            <Footer/>
-        </React.Fragment>
-    );
-}
+	return (
+		<React.Fragment>
+			<Header />
+			<main className="flex-shrink-0">{props.children}</main>
+			<Footer />
+		</React.Fragment>
+	);
+};
 
 export default Layout;
