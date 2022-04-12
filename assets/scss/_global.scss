@@ -1,0 +1,9 @@
+html,
+body {
+    @extend .h-100;
+}
+
+button.is-loading {
+    @extend .btn-light;
+    pointer-events: none;
+}

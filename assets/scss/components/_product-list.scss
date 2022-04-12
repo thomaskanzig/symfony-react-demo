@@ -1,0 +1,9 @@
+.product-list {
+  &__image > img {
+    width: 60px;
+  }
+
+  &__name {
+    width: 24rem;
+  }
+}
